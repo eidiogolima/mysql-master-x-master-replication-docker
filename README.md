@@ -106,10 +106,6 @@ Este projeto inclui testes automatizados para validar o comportamento do sistema
 ./test-failover-resilience.sh
 ```
 
-**Resultado**: ✅ Todos os testes passaram com sucesso - Zero perda de dados
-
-Veja relatório completo: `RELATORIO_TESTES_RESILIENCIA.md`
-
 ## 🚨 Troubleshooting
 
 ### Replication lag alto:
@@ -144,8 +140,7 @@ docker-compose up -d
 │   └── mysql/
 │       ├── my.cnf             # Configuração MySQL Master 1
 │       └── my-master-2.cnf    # Configuração MySQL Master 2
-├── mysql-master-1-data/       # Dados persistentes Master 1
-└── mysql-master-2-data/       # Dados persistentes Master 2
+
 ```
 
 ## ⚠️ Importante
