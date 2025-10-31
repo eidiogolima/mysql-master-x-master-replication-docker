@@ -2,6 +2,10 @@
 
 Este projeto configura uma replicação MySQL Master x Master utilizando Docker Compose, com phpMyAdmin para administração.
 
+
+![Screenshot do phpMyAdmin](screenshot.png)
+
+
 ## 🚀 Como usar
 
 ### 1. Iniciar os containers
