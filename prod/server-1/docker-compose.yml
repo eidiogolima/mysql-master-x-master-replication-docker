@@ -39,7 +39,7 @@ services:
     ports:
       - '8085:80'
     volumes:
-      - './exec:/scripts:ro'
+      - './exec:/scripts:rw'
     depends_on:
       mysql-master-1:
         condition: service_healthy
