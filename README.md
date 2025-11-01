@@ -1,4 +1,4 @@
-# 🔄 MySQL Master x Master com Docker# 🐳 MySQL Master x Master Replication com Docker
+# 🐳 MySQL Master x Master Replication com Docker
 
 
 
