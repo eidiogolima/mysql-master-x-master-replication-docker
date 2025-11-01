@@ -18,7 +18,6 @@ services:
     volumes:
       - 'mysql-master-1-data:/var/lib/mysql'
       - './mysql/my-config-1.cnf:/etc/mysql/conf.d/my.cnf'
-      - './exec/setup-replication.sh:/usr/local/bin/setup-replication.sh:ro'
     networks:
       - mysql-network
     command: --server-id=1 --auto-increment-offset=1 --auto-increment-increment=2
@@ -39,6 +38,8 @@ services:
       PMA_ARBITRARY: 1
     ports:
       - '8085:80'
+    volumes:
+      - './exec:/scripts:ro'
     depends_on:
       mysql-master-1:
         condition: service_healthy
