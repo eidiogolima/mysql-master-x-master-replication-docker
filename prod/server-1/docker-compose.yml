@@ -44,20 +44,6 @@ services:
     networks:
       - mysql-network
 
-  setup-replication:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: setup-replication-master-1
-    environment:
-      MASTER2_IP: ${MASTER2_IP:-mysql-master-2}
-    depends_on:
-      mysql-master-1:
-        condition: service_healthy
-    networks:
-      - mysql-network
-    command: "${MASTER2_IP:-mysql-master-2}"
-
 volumes:
   mysql-master-1-data:
     driver: local

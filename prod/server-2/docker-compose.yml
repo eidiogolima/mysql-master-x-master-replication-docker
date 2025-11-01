@@ -39,27 +39,11 @@ services:
     ports:
       - '8085:80'
     depends_on:
-      mysql-master-1:
-        condition: service_healthy
       mysql-master-2:
         condition: service_healthy
     networks:
       - mysql-network
-
-  setup-replication:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: setup-replication-master-2
-    environment:
-      MASTER1_IP: ${MASTER1_IP:-mysql-master-1}
-    depends_on:
-      mysql-master-2:
-        condition: service_healthy
-    networks:
-      - mysql-network
-    command: "${MASTER1_IP:-mysql-master-1}"
-
+      
 volumes:
   mysql-master-2-data:
     driver: local
