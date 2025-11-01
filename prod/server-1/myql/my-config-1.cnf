@@ -1,0 +1,28 @@
+[mysqld]
+# Configuração básica
+bind-address = 0.0.0.0
+port = 3306
+
+# Configurações para Master x Master Replication
+server-id = 1
+log-bin = mysql-bin
+auto-increment-increment = 2
+auto-increment-offset = 1
+
+# Configurações de replicação básicas
+log-slave-updates = 1
+replicate-same-server-id = 0
+
+# Configurações GTID
+gtid_mode = ON
+enforce_gtid_consistency = ON
+
+# Configurações de charsetb
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+[mysql]
+default-character-set = utf8mb4
+
+[client]
+default-character-set = utf8mb4

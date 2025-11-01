@@ -1,0 +1,51 @@
+
+networks:
+  mysql-network:
+    driver: bridge
+
+services:
+  mysql-master-2:
+    image: 'mysql:8.0'
+    container_name: mysql-master-2
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-teste123}
+      MYSQL_DATABASE: db_test
+      MYSQL_USER: replicador
+      MYSQL_PASSWORD: ${DB_PASSWORD:-teste123}
+    ports:
+      - '3306:3306'
+    volumes:
+      - 'mysql-master-2-data:/var/lib/mysql'
+      - './docker/mysql/my-config-2.cnf:/etc/mysql/conf.d/my.cnf'
+    networks:
+      - mysql-network
+    command: --server-id=2 --auto-increment-offset=2 --auto-increment-increment=2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pteste123"]
+      timeout: 20s
+      retries: 10
+      start_period: 30s
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOSTS: mysql-master-2
+      PMA_PORTS: 3306
+      UPLOAD_LIMIT: 1G
+      PMA_ARBITRARY: 1
+    ports:
+      - '8085:80'
+    depends_on:
+      mysql-master-1:
+        condition: service_healthy
+      mysql-master-2:
+        condition: service_healthy
+    networks:
+      - mysql-network
+
+volumes:
+  mysql-master-2-data:
+    driver: local
