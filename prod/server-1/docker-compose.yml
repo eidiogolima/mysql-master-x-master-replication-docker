@@ -18,7 +18,7 @@ services:
     volumes:
       - 'mysql-master-1-data:/var/lib/mysql'
       - './mysql/my-config-1.cnf:/etc/mysql/conf.d/my.cnf'
-      - './exec/setup-replication.sh:/scripts/setup-replication.sh:ro'  # ✅ Monta diretório de scripts
+      - './exec/setup-replication.sh:/usr/local/bin/setup-replication.sh:ro'
     networks:
       - mysql-network
     command: --server-id=1 --auto-increment-offset=1 --auto-increment-increment=2
