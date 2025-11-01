@@ -17,7 +17,7 @@ services:
       - '3306:3306'
     volumes:
       - 'mysql-master-1-data:/var/lib/mysql'
-      - './docker/mysql/my-config-1.cnf:/etc/mysql/conf.d/my.cnf'
+      - './mysql/my-config-1.cnf:/etc/mysql/conf.d/my.cnf'
       - './exec:/scripts:ro'  # ✅ Monta diretório de scripts
     networks:
       - mysql-network
