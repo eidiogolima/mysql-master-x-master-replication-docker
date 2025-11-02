@@ -32,7 +32,7 @@ sleep 30
 
 # Criar usuário de replicação no Master 1
 echo "👤 Criando usuário de replicação no Master 1..."
-docker exec mysql-master-1 mysql -uroot -pteste123 -e "
+mysql -uroot -pteste123 -e "
 CREATE USER IF NOT EXISTS 'replicador'@'%' IDENTIFIED WITH mysql_native_password BY 'teste123';
 GRANT REPLICATION SLAVE ON *.* TO 'replicador'@'%';
 FLUSH PRIVILEGES;
@@ -48,7 +48,7 @@ sleep 5
 
 # Configurar Master 1 para replicar do Master 2 usando GTID
 echo "🔄 Configurando Master 1 para replicar do Master 2 (GTID)..."
-docker exec mysql-master-1 mysql -uroot -pteste123 -e "
+mysql -uroot -pteste123 -e "
 STOP SLAVE;
 RESET SLAVE ALL;
 CHANGE MASTER TO
@@ -74,13 +74,13 @@ echo ""
 echo "✅ Verificando status da replicação..."
 echo ""
 echo "=== STATUS REPLICAÇÃO MASTER 1 ==="
-docker exec mysql-master-1 mysql -uroot -pteste123 -e "SHOW SLAVE STATUS\G" | grep -E "(Slave_IO_Running|Slave_SQL_Running|Last_Error|Seconds_Behind_Master|Master_Host)"
+mysql -uroot -pteste123 -e "SHOW SLAVE STATUS\G" | grep -E "(Slave_IO_Running|Slave_SQL_Running|Last_Error|Seconds_Behind_Master|Master_Host)"
 
 echo ""
 
 # Verificar se há erros
-SLAVE_IO=$(docker exec mysql-master-1 mysql -uroot -pteste123 -e "SHOW SLAVE STATUS\G" | grep "Slave_IO_Running:" | awk '{print $2}')
-SLAVE_SQL=$(docker exec mysql-master-1 mysql -uroot -pteste123 -e "SHOW SLAVE STATUS\G" | grep "Slave_SQL_Running:" | awk '{print $2}')
+SLAVE_IO=$(mysql -uroot -pteste123 -e "SHOW SLAVE STATUS\G" | grep "Slave_IO_Running:" | awk '{print $2}')
+SLAVE_SQL=$(mysql -uroot -pteste123 -e "SHOW SLAVE STATUS\G" | grep "Slave_SQL_Running:" | awk '{print $2}')
 
 if [ "$SLAVE_IO" = "Yes" ] && [ "$SLAVE_SQL" = "Yes" ]; then
     echo "🎉 Replicação ATIVA no Master 1!"

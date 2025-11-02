@@ -1,8 +1,6 @@
 # Dockerfile para executar setup-replication após containers
+# O script será executado DENTRO do container MySQL
 FROM bash:latest
-
-# Instalar mysql-client para executar comandos MySQL
-RUN apk add --no-cache mysql-client
 
 # Copiar o script de setup
 COPY ./exec/setup-replication.sh /setup-replication.sh
