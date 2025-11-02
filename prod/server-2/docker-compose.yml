@@ -18,6 +18,7 @@ services:
     volumes:
       - 'mysql-master-2-data:/var/lib/mysql'
       - './mysql/my-config-2.cnf:/etc/mysql/conf.d/my.cnf'
+      - './exec:/scripts:ro'
     networks:
       - mysql-network
     command: --server-id=2 --auto-increment-offset=2 --auto-increment-increment=2
