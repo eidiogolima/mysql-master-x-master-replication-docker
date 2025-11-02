@@ -17,7 +17,7 @@ services:
       - '3306:3306'
     volumes:
       - 'mysql-master-2-data:/var/lib/mysql'
-      - './docker/mysql/my-config-2.cnf:/etc/mysql/conf.d/my.cnf'
+      - './mysql/my-config-2.cnf:/etc/mysql/conf.d/my.cnf'
     networks:
       - mysql-network
     command: --server-id=2 --auto-increment-offset=2 --auto-increment-increment=2
