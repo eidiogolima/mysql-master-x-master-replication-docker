@@ -7,6 +7,8 @@ services:
   setup-env:
     image: alpine:latest
     container_name: setup-env
+    # ✅ IMPORTANTE: Não reiniciar automaticamente
+    restart: "no"
     volumes:
       - ./mysql:/host-mysql
       - ./exec:/host-exec
@@ -19,6 +21,8 @@ services:
         echo '✅ Ambiente configurado!'
         echo '📋 Verificando arquivos:'
         ls -la /host-mysql/my-config-2.cnf
+        # ✅ IMPORTANTE: Sair com sucesso (exit 0)
+        exit 0
       "
 
   mysql-master-2:
