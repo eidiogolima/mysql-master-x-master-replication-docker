@@ -1,13 +1,34 @@
-
 networks:
   mysql-network:
     driver: bridge
 
 services:
+  # Container de inicialização
+  setup-env:
+    image: alpine:latest
+    container_name: setup-env
+    volumes:
+      - ./mysql:/host-mysql
+      - ./exec:/host-exec
+    command: |
+      sh -c "
+        echo '🔧 Configurando ambiente...'
+        chmod 644 /host-mysql/my-config-2.cnf
+        chmod 755 /host-mysql/
+        chmod +x /host-exec/*.sh 2>/dev/null || true
+        echo '✅ Ambiente configurado!'
+        echo '📋 Verificando arquivos:'
+        ls -la /host-mysql/my-config-2.cnf
+      "
+
   mysql-master-2:
     image: 'mysql:8.0'
     container_name: mysql-master-2
     restart: always
+    # Esperar o setup terminar antes de iniciar
+    depends_on:
+      setup-env:
+        condition: service_completed_successfully
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-teste123}
       MYSQL_DATABASE: db_test
@@ -17,7 +38,7 @@ services:
       - '3306:3306'
     volumes:
       - 'mysql-master-2-data:/var/lib/mysql'
-      - './mysql/my-config-2.cnf:/etc/mysql/conf.d/z-custom.cnf:ro'
+      - './mysql/my-config-2.cnf:/etc/mysql/conf.d/my.cnf:ro'
       - './exec:/scripts:ro'
     networks:
       - mysql-network
