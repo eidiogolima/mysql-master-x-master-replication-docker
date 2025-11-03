@@ -28,8 +28,11 @@ sleep 10
 # Criar usuário de replicação no Master 2
 echo "👤 Criando usuário de replicação no Master 2..."
 mysql -uroot -pteste123 -e "
-CREATE USER IF NOT EXISTS 'replicador'@'%' IDENTIFIED WITH mysql_native_password BY 'teste123';
+DROP USER IF EXISTS 'replicador'@'%';
+CREATE USER 'replicador'@'%' IDENTIFIED WITH mysql_native_password BY 'teste123';
 GRANT REPLICATION SLAVE ON *.* TO 'replicador'@'%';
+GRANT SELECT ON *.* TO 'replicador'@'%';
+GRANT REPLICATION CLIENT ON *.* TO 'replicador'@'%';
 FLUSH PRIVILEGES;
 "
 
