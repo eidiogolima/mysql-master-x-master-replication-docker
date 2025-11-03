@@ -17,7 +17,7 @@ services:
       - '3306:3306'
     volumes:
       - 'mysql-master-2-data:/var/lib/mysql'
-      - './mysql/my-config-2.cnf:/etc/mysql/conf.d/my.cnf'
+      - './mysql/my-config-2.cnf:/etc/mysql/conf.d/z-custom.cnf:ro'
       - './exec:/scripts:ro'
     networks:
       - mysql-network
